@@ -18,7 +18,7 @@ fi
 
 # 2. Install Homebrew packages
 echo "Installing Homebrew packages (zsh, bat, zoxide, fzf, postgresql@18, gh, jq, rg, exa, fd, nano, cloc, git, trash-cli, wget, railway)..."
-brew install zsh bat zoxide fzf postgresql@18 gh jq rg exa fd nano cloc git trash-cli wget railway
+brew install zsh bat zoxide fzf postgresql@18 gh jq rg exa fd nano cloc git trash-cli wget railway node watchman
 
 # 3. Install Homebrew casks
 echo "Installing Visual Studio Code (cask)..."
@@ -43,6 +43,11 @@ brew install --cask tailscale
 
 echo "Installing Dictionaries"
 brew install --cask dictionaries
+
+echo "installing developer apps with brew cask"
+brew install --cask qlcolorcode qlstephen quicklook-json \
+  firefox google-chrome popcorn-time qlimagesize visual-studio-code \ 
+qlmarkdown webpquicklook tidal iterm2
 
 # 4. Install bun
 echo "Installing bun..."
@@ -93,6 +98,12 @@ else
     echo "Default shell is already ZSH."
 fi
 
+
+# Set computer name (as done via System Preferences → Sharing)
+sudo scutil --set ComputerName "Kenny Coffie"
+sudo scutil --set HostName "kennymark"
+sudo scutil --set LocalHostName "kennymark"
+
 # 11. Configure macOS settings
 echo "Configuring macOS settings..."
 echo "Setting iOS Simulator screenshot location..."
@@ -119,6 +130,18 @@ echo "Enabling Dock autohide..."
 defaults write com.apple.dock autohide -bool true
 echo "Setting Dock autohide animation speed..."
 defaults write com.apple.dock autohide-time-modifier -float 0.15
+
+###############################################################################
+# Trackpad, mouse, keyboard, Bluetooth accessories, and input                 #
+###############################################################################
+
+# Trackpad: enable tap to click for this user and for the login screen
+defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad Clicking -bool true
+defaults -currentHost write NSGlobalDomain com.apple.mouse.tapBehavior -int 1
+defaults write NSGlobalDomain com.apple.mouse.tapBehavior -int 1
+
+# Save to disk (not to iCloud) by default
+defaults write NSGlobalDomain NSDocumentSaveNewDocumentsToCloud -bool false
 
 echo "Restarting Finder and Dock to apply changes..."
 killall Finder || true
